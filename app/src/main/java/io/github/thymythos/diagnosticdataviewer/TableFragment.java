@@ -102,7 +102,7 @@ public class TableFragment extends Fragment implements LiveDataFragment {
         TypedArray tpsBins = getResources().obtainTypedArray(tpsMotId);
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_table, container, false);
+        View view = inflater.inflate(R.layout.fragment_table_modern, container, false);
 
         maxRPM = new int[rpmBins.length() - 2];
         minRPM = new int[rpmBins.length() - 2];

@@ -27,9 +27,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,32 +68,41 @@ public class DeviceScanActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        mListView = new ListView(this);
+        setContentView(mListView);
+        
         try {
-            mListView = new ListView(this);
-            setContentView(mListView);
             getSupportActionBar().setTitle(R.string.title_devices);
-            mHandler = new Handler();
+        } catch (Exception e) {
+            // ActionBar not available
+        }
+        
+        mHandler = new Handler();
 
-            // Use this check to determine whether BLE is supported on the device.  Then you can
-            // selectively disable BLE-related features.
-            if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-                Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
-                finish();
-            }
+        // Use this check to determine whether BLE is supported on the device.
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-            // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
-            // BluetoothAdapter through BluetoothManager.
-            final BluetoothManager bluetoothManager =
-                    (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-            mBluetoothAdapter = bluetoothManager.getAdapter();
+        // Initializes a Bluetooth adapter.
+        final BluetoothManager bluetoothManager =
+                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager == null) {
+            Toast.makeText(this, "Bluetooth not available", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        
+        mBluetoothAdapter = bluetoothManager.getAdapter();
 
-            // Checks if Bluetooth is supported on the device.
-            if (mBluetoothAdapter == null) {
-                Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } catch (NullPointerException e) {
-
+        // Checks if Bluetooth is supported on the device.
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
     }
 
@@ -116,14 +125,12 @@ public class DeviceScanActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_scan:
-                mLeDeviceListAdapter.clear();
-                scanLeDevice(true);
-                break;
-            case R.id.menu_stop:
-                scanLeDevice(false);
-                break;
+        int id = item.getItemId();
+        if (id == R.id.menu_scan) {
+            mLeDeviceListAdapter.clear();
+            scanLeDevice(true);
+        } else if (id == R.id.menu_stop) {
+            scanLeDevice(false);
         }
         return true;
     }
@@ -155,18 +162,38 @@ public class DeviceScanActivity extends AppCompatActivity {
                 editor.putString(SETTING_DEVICE_ADDRESS, device.getAddress());
                 editor.commit();
                 if (mScanning) {
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    try {
+                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    } catch (SecurityException e) {
+                        // Permission issue, ignore
+                    }
                     mScanning = false;
                 }
                 finish();
             }
         });
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        // Check and request permissions for Android 11
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_GRANT_PERMISSIONS);
+            ActivityCompat.requestPermissions(this, 
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 
+                REQUEST_GRANT_PERMISSIONS);
         } else {
             scanLeDevice(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_GRANT_PERMISSIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                scanLeDevice(true);
+            } else {
+                Toast.makeText(this, "Location permission required for Bluetooth scanning", Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
     }
 
@@ -189,22 +216,42 @@ public class DeviceScanActivity extends AppCompatActivity {
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
+            // Check permissions before scanning
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Location permission required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
             // Stops scanning after a pre-defined scan period.
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    try {
+                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    } catch (SecurityException e) {
+                        // Permission denied
+                    }
                     invalidateOptionsMenu();
                 }
             }, SCAN_PERIOD);
 
             mScanning = true;
-            mBluetoothAdapter.startLeScan(mLeScanCallback);
-            mBluetoothAdapter.startDiscovery();
+            try {
+                mBluetoothAdapter.startLeScan(mLeScanCallback);
+                mBluetoothAdapter.startDiscovery();
+            } catch (SecurityException e) {
+                Toast.makeText(this, "Bluetooth permission denied", Toast.LENGTH_SHORT).show();
+                mScanning = false;
+            }
         } else {
             mScanning = false;
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            try {
+                mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            } catch (SecurityException e) {
+                // Ignore
+            }
         }
         invalidateOptionsMenu();
     }
@@ -264,7 +311,12 @@ public class DeviceScanActivity extends AppCompatActivity {
             }
 
             BluetoothDevice device = mLeDevices.get(i);
-            final String deviceName = device.getName();
+            String deviceName = null;
+            try {
+                deviceName = device.getName();
+            } catch (SecurityException e) {
+                // Permission denied
+            }
             if (deviceName != null && deviceName.length() > 0)
                 viewHolder.deviceName.setText(deviceName);
             else
@@ -284,8 +336,12 @@ public class DeviceScanActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mLeDeviceListAdapter.addDevice(device);
-                    mLeDeviceListAdapter.notifyDataSetChanged();
+                    try {
+                        mLeDeviceListAdapter.addDevice(device);
+                        mLeDeviceListAdapter.notifyDataSetChanged();
+                    } catch (SecurityException e) {
+                        // Permission denied during scan
+                    }
                 }
             });
         }

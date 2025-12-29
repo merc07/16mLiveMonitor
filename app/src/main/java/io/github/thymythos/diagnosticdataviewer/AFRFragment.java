@@ -23,7 +23,7 @@ public class AFRFragment extends Fragment implements LiveDataFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_afr, container, false);
+        return inflater.inflate(R.layout.fragment_afr_modern, container, false);
     }
 
     @Override

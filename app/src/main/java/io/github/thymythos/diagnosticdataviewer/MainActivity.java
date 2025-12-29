@@ -15,14 +15,14 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -442,7 +442,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Apply theme before super.onCreate() to avoid recreation
+        ThemeHelper.applyTheme(ThemeHelper.getSavedTheme(this));
+        
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.info_title);
@@ -522,16 +526,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_connect:
-                final Intent intent = new Intent(MainActivity.this, DeviceScanActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.menu_disconnect:
-                disconnectBluetooth ();
-                break;
-            case R.id.menu_settings:
-                break;
+        int id = item.getItemId();
+        if (id == R.id.menu_connect) {
+            final Intent intent = new Intent(MainActivity.this, DeviceScanActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_disconnect) {
+            disconnectBluetooth();
+        } else if (id == R.id.menu_settings) {
+            // Settings menu item
         }
         return true;
     }
@@ -553,7 +555,13 @@ public class MainActivity extends AppCompatActivity
     private void navigateToFragment(int menuId) {
         int title = 0;
         Fragment fragment = null;
-        if (menuId == R.id.nav_startup_view) {
+        androidx.fragment.app.Fragment supportFragment = null;
+        
+        if (menuId == R.id.nav_settings) {
+            // Use AndroidX Fragment for Settings
+            supportFragment = new SettingsFragment();
+            title = R.string.settings_title;
+        } else if (menuId == R.id.nav_startup_view) {
             fragment = StartupFragment.newInstance();
             title = R.string.info_title;
         } else if (menuId == R.id.nav_idle_view) {
@@ -638,10 +646,22 @@ public class MainActivity extends AppCompatActivity
         MenuItem menuItem = navigationView.getMenu().findItem(menuId);
         if (menuItem != null) menuItem.setChecked(true);
 
+        // Update ActionBar title - always set it
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setTitle(title);
-        if (fragment != null) {
-            // Insert the fragment by replacing any existing fragment
+        if (actionBar != null) {
+            if (title != 0) {
+                actionBar.setTitle(title);
+            }
+        }
+        
+        // Load fragment
+        if (supportFragment != null) {
+            // Use Support Fragment Manager for AndroidX fragments (Settings)
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, supportFragment)
+                    .commit();
+        } else if (fragment != null) {
+            // Use legacy Fragment Manager for old fragments
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)

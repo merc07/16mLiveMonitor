@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?android:attr/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- RPM Gauge Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Engine RPM"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_marginBottom="2dp" />
+
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeRPM"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    gauge:faceColor="?attr/colorSurface"
+                    gauge:initialValue="0"
+                    gauge:labelTextSize="38"
+                    gauge:upperText="@string/Gauge_start"
+                    gauge:upperTextSize="55"
+                    gauge:lowerText="@string/Gauge_start"
+                    gauge:lowerTextSize="60"
+                    gauge:maxValue="2000"
+                    gauge:minValue="0"
+                    gauge:scaleColor="?attr/colorPrimary"
+                    gauge:totalNicks="60"
+                    gauge:valuePerNick="50" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- TPS Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TPS_label"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_marginBottom="2dp" />
+
+                <de.nitri.gauge.Gauge
+                    android:id="@+id/gaugeTPS"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    gauge:faceColor="?attr/colorSurface"
+                    gauge:initialValue="1"
+                    gauge:labelTextSize="38"
+                    gauge:upperText="@string/TPS_label"
+                    gauge:upperTextSize="55"
+                    gauge:lowerText="@string/Gauge_start"
+                    gauge:lowerTextSize="60"
+                    gauge:maxValue="3"
+                    gauge:minValue="1"
+                    gauge:scaleColor="?attr/colorPrimary"
+                    gauge:totalNicks="30"
+                    gauge:valuePerNick="0.1" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- AFR Gauges Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Air/Fuel Ratio"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <de.nitri.gauge.Gauge
+                        android:id="@+id/gaugeAFR1"
+                        android:layout_width="0dp"
+                        android:layout_height="190dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        gauge:faceColor="?attr/colorSurface"
+                        gauge:initialValue="10"
+                        gauge:labelTextSize="32"
+                        gauge:upperText="@string/AFR1_gauge"
+                        gauge:upperTextSize="38"
+                        gauge:lowerText="@string/Gauge_start"
+                        gauge:lowerTextSize="55"
+                        gauge:maxValue="15"
+                        gauge:minValue="11"
+                        gauge:scaleColor="?attr/colorPrimary"
+                        gauge:totalNicks="60"
+                        gauge:valuePerNick="0.1" />
+
+                    <de.nitri.gauge.Gauge
+                        android:id="@+id/gaugeAFR2"
+                        android:layout_width="0dp"
+                        android:layout_height="190dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        gauge:faceColor="?attr/colorSurface"
+                        gauge:initialValue="10"
+                        gauge:labelTextSize="32"
+                        gauge:upperText="@string/AFR2_gauge"
+                        gauge:upperTextSize="38"
+                        gauge:lowerText="@string/Gauge_start"
+                        gauge:lowerTextSize="55"
+                        gauge:maxValue="15"
+                        gauge:minValue="11"
+                        gauge:scaleColor="?attr/colorPrimary"
+                        gauge:totalNicks="60"
+                        gauge:valuePerNick="0.1" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

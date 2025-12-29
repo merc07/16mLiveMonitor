@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?android:attr/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Engine Data Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Engine Data"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingEnd="8dp">
+
+                        <TextView
+                            android:id="@+id/label_RPM"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/RPM_label"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/label_RPM_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/RPM_data"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            android:textColor="?attr/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingStart="8dp">
+
+                        <TextView
+                            android:id="@+id/label_TPS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/TPS_label"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/label_TPS_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/TPS_data"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            android:textColor="?attr/colorPrimary" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- AFR Gauges Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Air/Fuel Ratio"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <de.nitri.gauge.Gauge
+                        android:id="@+id/gaugeAFR1"
+                        android:layout_width="0dp"
+                        android:layout_height="220dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        gauge:faceColor="?attr/colorSurface"
+                        gauge:initialValue="10"
+                        gauge:labelTextSize="35"
+                        gauge:upperText="@string/AFR1_gauge"
+                        gauge:upperTextSize="42"
+                        gauge:lowerText="@string/Gauge_start"
+                        gauge:lowerTextSize="60"
+                        gauge:maxValue="15"
+                        gauge:minValue="11"
+                        gauge:scaleColor="?attr/colorPrimary"
+                        gauge:totalNicks="60"
+                        gauge:valuePerNick="0.1" />
+
+                    <de.nitri.gauge.Gauge
+                        android:id="@+id/gaugeAFR2"
+                        android:layout_width="0dp"
+                        android:layout_height="220dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        gauge:faceColor="?attr/colorSurface"
+                        gauge:initialValue="10"
+                        gauge:labelTextSize="35"
+                        gauge:upperText="@string/AFR2_gauge"
+                        gauge:upperTextSize="42"
+                        gauge:lowerText="@string/Gauge_start"
+                        gauge:lowerTextSize="60"
+                        gauge:maxValue="15"
+                        gauge:minValue="11"
+                        gauge:scaleColor="?attr/colorPrimary"
+                        gauge:totalNicks="60"
+                        gauge:valuePerNick="0.1" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Messages Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <TextView
+                android:id="@+id/label_Message_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Message_data"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="?attr/colorError"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:minHeight="60dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

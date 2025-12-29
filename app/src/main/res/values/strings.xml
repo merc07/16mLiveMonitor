@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ECU Data Logger</string>
+    <string name="app_name">16m Live Monitor</string>
 
     <string name="title_activity_main">MainActivity</string>
 
@@ -27,6 +27,8 @@
     <string name="table_title">Map</string>
     <string name="actuator_title">Tests</string>
     <string name="fast_title">Fast Log</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_group">Settings</string>
 
 
     <!-- BLE stuff -->

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?android:attr/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Engine Data Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:rowCount="2"
+                android:alignmentMode="alignBounds">
+
+                <TextView
+                    android:id="@+id/label_RPM"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/RPM_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_TPS"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/TPS_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_AFR1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AFR1_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_AFR2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AFR2_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_RPM_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/RPM_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_TPS_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/TPS_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_AFR1_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AFR1_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/label_AFR2_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AFR2_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="4dp" />
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Temperatures Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2">
+
+                <TextView
+                    android:id="@+id/label_CTS"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/CTS_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_IAT"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/IAT_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_CTS_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/CTS_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_IAT_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/IAT_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Additional Sensors Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2">
+
+                <TextView
+                    android:id="@+id/label_AP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AP_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_BV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/BV_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_AP_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/AP_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_BV_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/BV_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Injectors Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2">
+
+                <TextView
+                    android:id="@+id/label_INJ1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/INJ1_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_INJ2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/INJ2_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_INJ1_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/INJ1_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_INJ2_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/INJ2_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Timing Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2">
+
+                <TextView
+                    android:id="@+id/label_ADV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/ADV_label"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/label_ADV_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="@string/ADV_data"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+            </GridLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Messages Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:contentPadding="12dp">
+
+            <TextView
+                android:id="@+id/label_Message_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Message_data"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textColor="?attr/colorError"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:minHeight="60dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

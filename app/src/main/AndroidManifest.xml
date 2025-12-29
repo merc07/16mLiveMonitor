@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.github.thymythos.diagnosticdataviewer">
 
     <!-- Declare this required feature if you want to make the app available to BLE-capable
@@ -8,9 +9,22 @@
     PackageManager.hasSystemFeature(FEATURE_BLUETOOTH_LE) -->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- Bluetooth permissions for Android 12+ (API 31+) -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    
+    <!-- Legacy Bluetooth permissions (API 30 and below) -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    
+    <!-- Location permissions required for Bluetooth scanning on Android 6-11 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +36,8 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,11 +45,13 @@
         </activity>
         <activity
             android:name=".DeviceScanActivity"
-            android:label="DiagDeviceScan">
+            android:label="DiagDeviceScan"
+            android:exported="false">
         </activity>
         <service
             android:name=".BluetoothLeService"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
         </service>
     </application>
 </manifest>
