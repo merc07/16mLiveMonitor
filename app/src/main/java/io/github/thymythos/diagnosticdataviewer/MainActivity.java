@@ -1,8 +1,8 @@
 package io.github.thymythos.diagnosticdataviewer;
 
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
             Resources res = getResources();
             String[] separated = data.split(",");
             Integer dataType = Integer.valueOf(separated[0]);
-            Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
 
             // TODO: Use different characteristics instead of multiplexing the data into one
             switch (dataType) {
@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
-        registerReceiver(mGattUpdateReceiver, intentFilter);
+        registerReceiver(mGattUpdateReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
 
         if (mBluetoothLeService != null) {
             SharedPreferences settings = getSharedPreferences(SETTINGS_BLUETOOTH, MODE_PRIVATE);
@@ -661,8 +661,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.content_frame, supportFragment)
                     .commit();
         } else if (fragment != null) {
-            // Use legacy Fragment Manager for old fragments
-            FragmentManager fragmentManager = getFragmentManager();
+            // Use Support Fragment Manager for AndroidX fragments
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();

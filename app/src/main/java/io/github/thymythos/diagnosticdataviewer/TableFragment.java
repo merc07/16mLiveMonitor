@@ -1,6 +1,6 @@
 package io.github.thymythos.diagnosticdataviewer;
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
